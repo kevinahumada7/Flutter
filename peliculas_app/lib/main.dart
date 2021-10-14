@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:peliculas_app/pages/pages.dart';
 
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ void main() => runApp(const AppState());
 
 class AppState extends StatelessWidget {
   const AppState({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         appBarTheme: AppBarTheme(
           color: Colors.red[900],
-          centerTitle: true
+          centerTitle: true,
+          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent)
         )
       ),
     );
