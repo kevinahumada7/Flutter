@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_disenos1/screens/basic_desing.dart';
-import 'package:flutter_disenos1/screens/scroll_screen.dart';
+import 'package:flutter_disenos/screens/basic_desing.dart';
+import 'package:flutter_disenos/screens/home_page.dart';
+import 'package:flutter_disenos/screens/scroll_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -17,10 +18,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Desing App',
         debugShowCheckedModeBanner: false,
-        initialRoute: 'scroll_screen',
+        theme: ThemeData.dark(),
+        initialRoute: 'home_page',
         routes: {
           'basic_desing': (BuildContext context) => const BasicDesingScreen(),
           'scroll_screen': (BuildContext context) => const ScrollScreen(),
+          'home_page': (BuildContext context) => const HomePage(),
         }
       )
     ;
