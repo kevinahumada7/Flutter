@@ -17,28 +17,22 @@ class CardTable extends StatelessWidget {
         ),
         TableRow(
           children: [
-            _SingleCard(color: Colors.blue, text: 'General', icon: Icons.border_all),
-            _SingleCard(color: Colors.green, text: 'Transport', icon: Icons.emoji_transportation),
+            _SingleCard(color: Colors.teal, text: 'Gastos', icon: Icons.bar_chart),
+            _SingleCard(color: Colors.amber, text: 'Guardado', icon: Icons.bookmark),
           ]
         ),
         TableRow(
           children: [
-            _SingleCard(color: Colors.blue, text: 'General', icon: Icons.border_all),
-            _SingleCard(color: Colors.green, text: 'Transport', icon: Icons.emoji_transportation),
+            _SingleCard(color: Colors.brown, text: 'ID', icon: Icons.badge),
+            _SingleCard(color: Colors.cyan, text: 'Renovar', icon: Icons.autorenew),
           ]
         ),
         TableRow(
           children: [
-            _SingleCard(color: Colors.blue, text: 'General', icon: Icons.border_all),
-            _SingleCard(color: Colors.green, text: 'Transport', icon: Icons.emoji_transportation),
+            _SingleCard(color: Colors.indigo, text: 'Recientes', icon: Icons.auto_awesome_mosaic_rounded),
+            _SingleCard(color: Colors.pink, text: 'Inversiones', icon: Icons.attach_money),
           ]
-        ),
-        TableRow(
-          children: [
-            _SingleCard(color: Colors.blue, text: 'General', icon: Icons.border_all),
-            _SingleCard(color: Colors.green, text: 'Transport', icon: Icons.emoji_transportation),
-          ]
-        ),
+        )
       ],
     );
   }
