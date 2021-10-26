@@ -5,10 +5,10 @@ class Usuario {
   String userID;
 
   Usuario({
-    this.online,
-    this.email,
-    this.nombre,
-    this.userID
+    required this.online,
+    required this.email,
+    required this.nombre,
+    required this.userID
   });
 
 }

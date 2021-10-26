@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class BotonAzul extends StatelessWidget {
 
   final String text;
-  final Function onPressed;
-
+  final void Function() onPressed;
+  
   const BotonAzul({
-    Key key, 
-    @required this.text, 
-    @required this.onPressed
+    Key? key, 
+    required this.text, 
+    required this.onPressed
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: this.onPressed,
+      onPressed: onPressed,
         child: Container(
           width: double.infinity,
           height: 55,

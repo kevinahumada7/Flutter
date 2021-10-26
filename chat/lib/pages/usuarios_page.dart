@@ -45,7 +45,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         onRefresh: _cargarUsuarios,
         header: WaterDropHeader(
           complete: Icon( Icons.check, color: Colors.blue[400] ),
-          waterDropColor: Colors.blue[400],
+          waterDropColor: (Colors.blue[400])!,
         ),
         child: _listViewUsuarios(),
       )

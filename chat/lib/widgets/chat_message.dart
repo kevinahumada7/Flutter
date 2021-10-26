@@ -7,10 +7,10 @@ class ChatMessage extends StatelessWidget {
   final AnimationController animationController;
 
   const ChatMessage({
-    Key key, 
-    @required this.texto, 
-    @required this.userId, 
-    @required this.animationController
+    Key? key, 
+    required this.texto, 
+    required this.userId, 
+    required this.animationController
   }) : super(key: key);
 
 
