@@ -1,4 +1,6 @@
+import 'package:chat/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -15,21 +17,26 @@ class _UsuariosPageState extends State<UsuariosPage> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   final usuarios = [
-    Usuario(userID: '1', nombre: 'María', email: 'test1@test.com', online: true ),
-    Usuario(userID: '2', nombre: 'Melissa', email: 'test2@test.com', online: false ),
-    Usuario(userID: '3', nombre: 'Fernando', email: 'test3@test.com', online: true ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    final user = authService.usuario;
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mi Nombre', style: TextStyle(color: Colors.black87 ) ),
+        title: Text(user.nombre, style: TextStyle(color: Colors.black87 ) ),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon( Icons.exit_to_app, color: Colors.black87 ),
-          onPressed: () {},
+          onPressed: () {
+            //TODO: Desconectar Socket
+
+            Navigator.pushReplacementNamed(context, 'login');
+            AuthService.deleteToken();
+          },
         ),
         actions: <Widget>[
           Container(
@@ -45,7 +52,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         onRefresh: _cargarUsuarios,
         header: WaterDropHeader(
           complete: Icon( Icons.check, color: Colors.blue[400] ),
-          waterDropColor: Colors.blue[400],
+          waterDropColor: Colors.blue[400]!,
         ),
         child: _listViewUsuarios(),
       )
