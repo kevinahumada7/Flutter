@@ -35,7 +35,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
             //TODO: Desconectar Socket
 
             Navigator.pushReplacementNamed(context, 'login');
-            AuthService.deleteToken();
+            //AuthService.deleteToken();
           },
         ),
         actions: <Widget>[

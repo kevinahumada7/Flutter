@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:chat/global/environment.dart';
 import 'package:chat/models/login_response.dart';
 import 'package:chat/models/usuario.dart';
@@ -118,10 +117,10 @@ class AuthService with ChangeNotifier {
   }
 
   Future _saveToken(String token) async {
-    return await _storage.write(key: 'token', value: token);
+    //return await _storage.write(key: 'token', value: token);
   }
 
   Future logout() async {
-    await _storage.delete(key: 'token');
+    //await _storage.delete(key: 'token');
   }
 }
