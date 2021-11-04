@@ -141,7 +141,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     _focusNode.requestFocus();
 
     final newMessage = new ChatMessage(
-      userId: '123', 
+      userId: '321', 
       texto: texto,
       animationController: AnimationController(vsync: this, duration: Duration( milliseconds: 500 )),
     );
