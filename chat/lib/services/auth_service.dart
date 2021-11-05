@@ -116,11 +116,13 @@ class AuthService with ChangeNotifier {
 
   }
 
+  //Sacar
   Future _saveToken(String token) async {
-    //return await _storage.write(key: 'token', value: token);
+    return await _storage.write(key: 'token', value: token);
   }
 
+  //Sacar
   Future logout() async {
-    //await _storage.delete(key: 'token');
+    await _storage.delete(key: 'token');
   }
 }

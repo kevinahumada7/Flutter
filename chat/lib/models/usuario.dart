@@ -9,7 +9,6 @@ Usuario usuarioFromJson(String str) => Usuario.fromJson(json.decode(str));
 String usuarioToJson(Usuario data) => json.encode(data.toJson());
 
 class Usuario {
-<<<<<<< HEAD
     Usuario({
         required this.nombre,
         required this.email,
@@ -36,18 +35,3 @@ class Usuario {
         "uid": uid,
     };
 }
-=======
-  bool online;
-  String email;
-  String nombre;
-  String userID;
-
-  Usuario({
-    required this.online,
-    required this.email,
-    required this.nombre,
-    required this.userID
-  });
-
-}
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa

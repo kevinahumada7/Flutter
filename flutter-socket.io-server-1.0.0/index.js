@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const path = require('path');
 require('dotenv').config();
 
@@ -23,19 +22,6 @@ app.listen(80, function () {
 // Lectura y parseo del Body
 app.use( express.json() );
 
-=======
-const express = require('express');
-const path = require('path');
-require('dotenv').config();
-
-//config linux
-
-// DB Config
-require('./database/config').dbConnection();
-
-// App de Express
-const app = express();
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
 
 // Node Server
 const server = require('http').createServer(app);
@@ -47,7 +33,6 @@ require('./sockets/socket');
 const publicPath = path.resolve( __dirname, 'public' );
 app.use( express.static( publicPath ) );
 
-<<<<<<< HEAD
 
 
 // Mis Rutas
@@ -55,18 +40,10 @@ app.use( '/api/login', require('./routes/auth') );
 
 
 
-=======
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
 server.listen( process.env.PORT, ( err ) => {
 
     if ( err ) throw new Error(err);
 
     console.log('Servidor corriendo en puerto', process.env.PORT );
 
-<<<<<<< HEAD
 });
-=======
-});
-
-
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa

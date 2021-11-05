@@ -3,13 +3,8 @@ import 'package:flutter/material.dart';
 class BotonAzul extends StatelessWidget {
 
   final String text;
-<<<<<<< HEAD
   final Function()? onPressed;
 
-=======
-  final void Function() onPressed;
-  
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
   const BotonAzul({
     Key? key, 
     required this.text, 

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-<<<<<<< HEAD
 
 const dbConnection = async() => {
 
@@ -10,11 +9,6 @@ const dbConnection = async() => {
             useUnifiedTopology: true,
         });
 
-=======
-const dbConnection = async() => {
-
-    try {
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
         console.log('DB Online');
         
 
@@ -22,10 +16,6 @@ const dbConnection = async() => {
         console.log(error);
         throw new Error('Error en la base de datos - Hable con el admin');
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
 }
 
 module.exports = {
