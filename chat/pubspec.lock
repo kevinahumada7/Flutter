@@ -69,7 +69,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-<<<<<<< HEAD
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -77,14 +76,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
-=======
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
   http:
     dependency: "direct main"
     description:
@@ -99,8 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-=======
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
+  js:
+    dependency: transitive
+    description:
+      name: js
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.3"
   lints:
     dependency: transitive
     description:
@@ -108,7 +109,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-<<<<<<< HEAD
   loading_indicator:
     dependency: "direct main"
     description:
@@ -116,8 +116,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
-=======
->>>>>>> 088cb63d4ad66606084363a60bd0d34d23caa4fa
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   matcher:
     dependency: transitive
     description:
@@ -165,6 +170,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  socket_io_client:
+    dependency: "direct main"
+    description:
+      name: socket_io_client
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  socket_io_common:
+    dependency: transitive
+    description:
+      name: socket_io_common
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   source_span:
     dependency: transitive
     description:
