@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:chat/global/environment.dart';
 import 'package:chat/models/login_response.dart';
 import 'package:chat/models/usuario.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService with ChangeNotifier {
-
   late Usuario usuario;
   bool _auth = false;
   final _storage = FlutterSecureStorage();
@@ -15,105 +15,103 @@ class AuthService with ChangeNotifier {
   bool get auth => _auth;
   set auth(bool value) {
     _auth = value;
-    notifyListeners(); 
+    notifyListeners();
   }
 
   static Future<String> getToken() async {
+    
     final _storage = FlutterSecureStorage();
-    final token = await _storage.read(key: 'token');
+    final token = (!kIsWeb) ? await _storage.read(key: 'token') : '';
     return token!;
   }
 
   static Future<String?> deleteToken() async {
-    final _storage = FlutterSecureStorage();
-    await _storage.delete(key: 'token');
+    if (!kIsWeb) {  
+      final _storage = FlutterSecureStorage();
+      await _storage.delete(key: 'token');
+    }
   }
 
   Future<bool> login(String email, String password) async {
-
     auth = true;
 
-    final data = {
-      "email" : email,
-      "password" : password
-    };
+    final data = {"email": email, "password": password};
 
     final uri = Uri.parse('${Environment.apiUrl}/login');
-    final response = await http.post(uri,
-      body: jsonEncode(data),
-      headers: {
-        'Content-Type':'application/json',
-      }
-    );
+    final response = await http.post(uri, body: jsonEncode(data), headers: {
+      'Content-Type': 'application/json',
+    });
     print(response.body);
     auth = false;
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final loginResponse = loginResponseFromJson(response.body);
       usuario = loginResponse.usuario;
 
-      await _saveToken(loginResponse.token); 
+      if (!kIsWeb) {
+        await _saveToken(loginResponse.token);
+      }
 
       return true;
     } else {
       return false;
     }
-
   }
 
-  Future register(String nombre, String email, String password ) async {
+  Future register(String nombre, String email, String password) async {
+    try {
+      this.auth = true;
+      final data = {'nombre': nombre, 'email': email, 'password': password};
 
-    this.auth = true;
+      final uri = Uri.parse('${Environment.apiUrl}/login/new');
+      final resp = await http.post(uri,
+          body: jsonEncode(data),
+          headers: {'Content-Type': 'application/json'});
 
-    final data = {
-      'nombre': nombre,
-      'email': email,
-      'password': password
-    };
+      this.auth = false;
 
-    final uri = Uri.parse('${ Environment.apiUrl }/login/new');
-    final resp = await http.post(uri, 
-      body: jsonEncode(data),
-      headers: { 'Content-Type': 'application/json' }
-    );
+      if (resp.statusCode == 200) {
+        final loginResponse = loginResponseFromJson(resp.body);
+        this.usuario = loginResponse.usuario;
+        await this._saveToken(loginResponse.token);
 
-    this.auth = false;
-
-    if ( resp.statusCode == 200 ) {
-      final loginResponse = loginResponseFromJson( resp.body );
-      this.usuario = loginResponse.usuario;
-      await this._saveToken(loginResponse.token);
-
-      return true;
-    } else {
-      final respBody = jsonDecode(resp.body);
-      return respBody['msg'];
+        return true;
+      } else {
+        final respBody = jsonDecode(resp.body);
+        return respBody['msg'];
+      }
+    } catch (e) {
+      print(e);
+      return false;
     }
-
   }
 
   Future<bool> isLoggedIn() async {
+    try {
+      final token = (!kIsWeb) ? await this._storage.read(key: 'token') : '';
 
-    final token = await this._storage.read(key: 'token') ?? '';
+      final uri = Uri.parse('${Environment.apiUrl}/login/renew');
+      final resp = await http.get(uri,
+          headers: {'Content-Type': 'application/json', 'x-token': token!});
 
-    final uri = Uri.parse('${ Environment.apiUrl }/login/renew');
-    final resp = await http.get(uri, 
-      headers: { 
-        'Content-Type': 'application/json',
-        'x-token': token
+      if (resp.statusCode == 200) {
+        final loginResponse = loginResponseFromJson(resp.body);
+        this.usuario = loginResponse.usuario;
+        if (!kIsWeb) {
+          await this._saveToken(loginResponse.token);
+        }
+        return true;
+      } else {
+        print(resp.statusCode);
+        return false;
       }
-    );
-
-    if ( resp.statusCode == 200 ) {
-      final loginResponse = loginResponseFromJson( resp.body );
-      this.usuario = loginResponse.usuario;
-      await this._saveToken(loginResponse.token);
-      return true;
-    } else {
-      this.logout();
+    } catch (e) {
+      print(e);
+      if (!kIsWeb) {
+        this.logout();
+      }
       return false;
     }
-
   }
 
   //Sacar

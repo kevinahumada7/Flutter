@@ -22,6 +22,12 @@ class MyApp extends StatelessWidget {
         title: 'Chat App',
         initialRoute: 'loading',
         routes: appRoutes,
+        onGenerateRoute: (RouteSettings settings) {
+          print("Know: $settings");
+        },
+        onUnknownRoute: (RouteSettings settings) {
+          print("Unknow: $settings");
+        },
       ),
     );
   }
