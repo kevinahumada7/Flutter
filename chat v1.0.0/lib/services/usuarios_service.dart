@@ -22,7 +22,6 @@ class UsuariosService {
       );
 
       final usuariosResponse = usuariosResponseFromJson( resp.body );
-      print(usuariosResponse);
 
       return usuariosResponse.usuarios;
 

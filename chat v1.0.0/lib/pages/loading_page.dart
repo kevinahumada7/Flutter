@@ -43,16 +43,12 @@ class LoadingPage extends StatelessWidget {
 
     final auth = await authService.isLoggedIn();
 
-    //TODO: Duracion del loading
-    //await Future.delayed( Duration(seconds: 3), () => 'Large Latte');
-
     if ( auth ) {
       socketService.connect();
       // Navigator.pushReplacementNamed(context, 'usuarios');
       Navigator.pushReplacement(
         context, 
         PageRouteBuilder(
-          
           pageBuilder: ( _, __, ___ ) => UsuariosPage(),
           transitionDuration: Duration(milliseconds: 0)
         )

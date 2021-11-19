@@ -31,6 +31,7 @@ const comprobarJWT = ( token = '' ) => {
         return [ true, uid];
 
     } catch (error) {
+        console.log(error);
         return [ false, null ];
     }
 

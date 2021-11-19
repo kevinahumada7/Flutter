@@ -6,11 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService with ChangeNotifier {
   late Usuario usuario;
-  bool _auth = false;
   final _storage = FlutterSecureStorage();
+  bool _auth = false;
 
   bool get auth => _auth;
   set auth(bool value) {
@@ -20,40 +21,47 @@ class AuthService with ChangeNotifier {
 
   static Future<String> getToken() async {
     
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
     final _storage = FlutterSecureStorage();
-    final token = (!kIsWeb) ? await _storage.read(key: 'token') : '';
+    final token = (kIsWeb) ? _prefs.getString('token') ?? '' : await _storage.read(key: 'token');
     return token!;
   }
 
   static Future<String?> deleteToken() async {
-    if (!kIsWeb) {  
+
+      final SharedPreferences _prefs = await SharedPreferences.getInstance();
       final _storage = FlutterSecureStorage();
-      await _storage.delete(key: 'token');
-    }
+      (kIsWeb) ? await _prefs.remove('token') : await _storage.delete(key: 'token');
   }
 
   Future<bool> login(String email, String password) async {
-    auth = true;
+    try {
+      auth = true;
 
-    final data = {"email": email, "password": password};
+      final data = {"email": email, "password": password};
 
-    final uri = Uri.parse('${Environment.apiUrl}/login');
-    final response = await http.post(uri, body: jsonEncode(data), headers: {
-      'Content-Type': 'application/json',
-    });
-    print(response.body);
-    auth = false;
+      final uri = Uri.parse('${Environment.apiUrl}/login');
+      final response = await http.post(uri, body: jsonEncode(data), headers: {
+        'Content-Type': 'application/json',
+      });
+      print(response.body);
+      auth = false;
 
-    if (response.statusCode == 200) {
-      final loginResponse = loginResponseFromJson(response.body);
-      usuario = loginResponse.usuario;
+      if (response.statusCode == 200) {
+        final loginResponse = loginResponseFromJson(response.body);
+        usuario = loginResponse.usuario;
 
-      if (!kIsWeb) {
         await _saveToken(loginResponse.token);
-      }
+        
+        return true;
 
-      return true;
-    } else {
+      } else {
+        print(response.statusCode);
+        return false;
+      }
+    } catch (e) {
+      auth = false;
+      print(e);
       return false;
     }
   }
@@ -88,7 +96,9 @@ class AuthService with ChangeNotifier {
 
   Future<bool> isLoggedIn() async {
     try {
-      final token = (!kIsWeb) ? await this._storage.read(key: 'token') : '';
+
+      final SharedPreferences _prefs = await SharedPreferences.getInstance();
+      final token = (kIsWeb) ? _prefs.getString('token') ?? '' : await _storage.read(key: 'token');
 
       final uri = Uri.parse('${Environment.apiUrl}/login/renew');
       final resp = await http.get(uri,
@@ -97,9 +107,7 @@ class AuthService with ChangeNotifier {
       if (resp.statusCode == 200) {
         final loginResponse = loginResponseFromJson(resp.body);
         this.usuario = loginResponse.usuario;
-        if (!kIsWeb) {
-          await this._saveToken(loginResponse.token);
-        }
+        await this._saveToken(loginResponse.token);
         return true;
       } else {
         print(resp.statusCode);
@@ -107,20 +115,22 @@ class AuthService with ChangeNotifier {
       }
     } catch (e) {
       print(e);
-      if (!kIsWeb) {
-        this.logout();
-      }
+      this.logout();
       return false;
     }
   }
 
-  //Sacar
   Future _saveToken(String token) async {
+    if (kIsWeb) {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      return await _prefs.setString('token', token);
+    }
+    
     return await _storage.write(key: 'token', value: token);
   }
 
-  //Sacar
   Future logout() async {
-    await _storage.delete(key: 'token');
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    (kIsWeb) ? await _prefs.remove('token') : await _storage.delete(key: 'token');
   }
 }

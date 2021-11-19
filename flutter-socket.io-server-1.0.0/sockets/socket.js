@@ -4,7 +4,11 @@ const { usuarioConectado, usuarioDesconectado, grabarMensaje } = require('../con
 
 // Mensajes de Sockets
 io.on('connection', (client) =>  {
-    const [ valido, uid ] = comprobarJWT( client.handshake.headers['x-token'] )
+    // console.log(client.handshake.headers['x-token']);
+    console.log(client.handshake);
+    console.log(client.handshake.auth);
+    const [ valido, uid ] = comprobarJWT( client.handshake.headers['x-token'] );
+    console.log(valido);
 
     // Verificar autenticación
     if ( !valido ) { return client.disconnect(); }
